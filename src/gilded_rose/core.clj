@@ -32,7 +32,7 @@
   {:name item-name, :sell-in sell-in, :quality quality})
 
 (defn update-current-inventory[]
-  (let [inventory 
+  (let [inventory
     [
       (item "+5 Dexterity Vest" 10 20)
       (item "Aged Brie" 2 0)
