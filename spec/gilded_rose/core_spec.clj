@@ -5,27 +5,19 @@
 (defn update-item [item] (first (update-quality [item])))
 
 (describe "gilded rose"
-  (let
-    [
-      vest      (item "+5 Dexterity Vest" 10 20)
-      elixir    (item "Elixir of the Mongoose" 5 7)
-      brie      (item "Aged Brie" 2 0)
-      passes    (item "Backstage passes to a TAFKAL80ETC concert" 15 20)
-      sulfuras  (item "Sulfuras, Hand of Ragnaros" 0 80)
-    ]
+  (let [vest      (item "+5 Dexterity Vest" 10 20)
+        elixir    (item "Elixir of the Mongoose" 5 7)
+        brie      (item "Aged Brie" 2 0)
+        passes    (item "Backstage passes to a TAFKAL80ETC concert" 15 20)
+        sulfuras  (item "Sulfuras, Hand of Ragnaros" 0 80)]
 
     (describe "update-quality"
 
       (it "never decreases quality past zero"
-        (pending "Should pass according to behavior specified in README, but doesn't due to bug")
+        (pending "Should pass, but doesn't due to bug")
         (let [vest (assoc vest :quality 0) elixir (assoc elixir :quality 0)]
           (should= 0 (:quality (update-item vest)))
           (should= 0 (:quality (update-item elixir)))))
-
-      (it "never increases quality above fifty"
-        (let [brie (assoc brie :quality 50) passes (assoc passes :quality 50)]
-          (should= 50 (:quality (update-item brie)))
-          (should= 50 (:quality (update-item passes)))))
 
       (context "when item is legendary"
 
@@ -45,6 +37,10 @@
         (it "increments brie quality by one"
           (should= (+ (:quality brie) 1) (:quality (update-item brie))))
 
+        (it "never increases brie quality above fifty"
+          (let [brie (assoc brie :quality 50)]
+            (should= 50 (:quality (update-item brie)))))
+
         (context "when item sell-in date has not been reached"
 
           (it "decrements vest quality by one"
@@ -60,6 +56,10 @@
             (it "increments backstage passes quality by one"
               (let [passes (assoc passes :sell-in 15)]
                 (should= (+ (:quality passes) 1) (:quality (update-item passes)))))
+
+            (it "never increases passes quality above fifty"
+              (let [passes (assoc (assoc passes :quality 50) :sell-in 15)]
+                (should= 50 (:quality (update-item passes)))))
           )
 
           (context "when sell-in date is greater than 5 and less than or equal to 10"
@@ -67,6 +67,11 @@
             (it "increments backstage passes quality by two"
               (let [passes (assoc passes :sell-in 10)]
                 (should= (+ (:quality passes) 2) (:quality (update-item passes)))))
+
+            (it "never increases passes quality above fifty"
+              (pending "Should pass, but doesn't due to bug")
+              (let [passes (assoc (assoc passes :quality 50) :sell-in 10)]
+                (should= 50 (:quality (update-item passes)))))
           )
 
           (context "when sell-in date is greater than 0 and less than or equal to 5"
@@ -74,6 +79,11 @@
             (it "increments backstage passes quality by three"
               (let [passes (assoc passes :sell-in 5)]
                 (should= (+ (:quality passes) 3) (:quality (update-item passes)))))
+
+            (it "never increases passes quality above fifty"
+              (pending "Should pass, but doesn't due to bug")
+              (let [passes (assoc (assoc passes :quality 50) :sell-in 5)]
+                (should= 50 (:quality (update-item passes)))))
           ))
 
         (context "when sell-in date has passesed"
