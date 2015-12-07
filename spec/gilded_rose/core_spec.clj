@@ -2,14 +2,11 @@
 (:require [speclj.core :refer :all]
           [gilded-rose.core :refer :all]))
 
-(defn update-item [item] (first (update-quality [item])))
-
 (describe "gilded rose"
 
   (describe "update-quality"
 
     (it "never decreases quality past zero"
-      (pending "Should pass, but doesn't due to bug")
       (let [vest (assoc vest :quality 0) elixir (assoc elixir :quality 0)]
         (should= 0 (:quality (update-item vest)))
         (should= 0 (:quality (update-item elixir)))))
@@ -64,7 +61,6 @@
               (should= (+ (:quality passes) 2) (:quality (update-item passes)))))
 
           (it "never increases passes quality above fifty"
-            (pending "Should pass, but doesn't due to bug")
             (let [passes (assoc (assoc passes :quality 50) :sell-in 10)]
               (should= 50 (:quality (update-item passes)))))
         )
@@ -76,7 +72,6 @@
               (should= (+ (:quality passes) 3) (:quality (update-item passes)))))
 
           (it "never increases passes quality above fifty"
-            (pending "Should pass, but doesn't due to bug")
             (let [passes (assoc (assoc passes :quality 50) :sell-in 5)]
               (should= 50 (:quality (update-item passes)))))
         ))
