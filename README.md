@@ -1,3 +1,9 @@
+# Gilded Rose Kata - Clojure Edition
+
+The master branch of this repo is the starting code for the exercise. Check the 'tested' branch for a version with just the tests I wrote for the exercise, or the 'solution' branch for the completed refactoring.
+
+## Instructions
+
 If you want to get cracking on the Clojure source then do this:
 
     git clone git@github.com:mjansen401/gilded-rose-clojure.git
