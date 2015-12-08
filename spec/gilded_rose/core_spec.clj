@@ -1,6 +1,7 @@
 (ns gilded-rose.core-spec
 (:require [speclj.core :refer :all]
-          [gilded-rose.core :refer :all]))
+          [gilded-rose.core :refer :all]
+          [gilded-rose.item-update :refer :all]))
 
 (describe "gilded rose"
 
